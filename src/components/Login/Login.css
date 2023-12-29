@@ -1,0 +1,66 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+.Login {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(194deg,black, purple);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: #eee;
+}
+
+form input {
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+form label{
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+
+form button {
+  padding: 10px 15px;
+  background-color: #238636;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  color: blue;
+}
+
+.userProvider label{
+  cursor: pointer;
+}
+.userProvider input{
+  margin: 0 5px;
+}
+
+.userProvider{
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+}

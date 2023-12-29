@@ -1,0 +1,20 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2% 8%;
+}
+
+.navbar h1 {
+  color: blueviolet;
+  font-size: 2rem;
+}
+.nav-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #a0a0a0;
+}
+.nav-right h2 {
+  color: black;
+}

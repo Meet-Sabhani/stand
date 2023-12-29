@@ -1,0 +1,28 @@
+form {
+  width: 30%;
+  margin: 0 auto;
+}
+.Provider {
+  text-align: center;
+}
+
+.Provider textarea {
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.rating i{
+  color: #FEC920;
+}
+button{
+  padding: 6px;
+  border: none;
+  margin: 2px;
+}
+input{
+  outline: none;
+  border: 1px solid grey;
+  padding: 2px 3px;
+}
