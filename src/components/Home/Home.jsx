@@ -4,15 +4,15 @@ import Card from "../Card/Card";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const nav = useNavigate()
-  const isLoggedIn = localStorage.getItem('setLoging')
-  useEffect(()=>{
-    if(!isLoggedIn){
-      nav('/')
+  const nav = useNavigate();
+  const isLoggedIn = localStorage.getItem("setLoging") === "true";
+  useEffect(() => {
+    if (!isLoggedIn) {
+      nav("/");
     }
-  })
+  });
   return (
-    <div >
+    <div>
       <Navbar />
       <Card />
     </div>

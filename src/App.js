@@ -8,9 +8,8 @@ import Home from "./components/Home/Home";
 import Provider from "./components/Provider/Provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { AuthProvider } from "./AuthContext";
-// import PrivateRoute from "./PrivateRoute";
 import SignUp from "./components/SingUp/SingUp";
+import Error from "./components/404 Error/Error";
 
 function App() {
   return (
@@ -20,7 +19,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
         <Route path="/provider" element={<Provider />} />
-        <Route path="*" element={<p>There's nothing here: 404!</p>} />
+        <Route path="*" element={<Error/>} />
       </Routes>
       <ToastContainer
         position="top-right"

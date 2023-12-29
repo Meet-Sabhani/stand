@@ -70,18 +70,17 @@ const SignUp = () => {
   return (
     <div className="Login">
       <form>
-        <label htmlFor="name">name</label>
+        <h2>Singup Here</h2>
+        <label htmlFor="name">Enter Your name</label>
         <input
           type="text"
-          placeholder="Enter Your name"
           name="name"
           value={formData.name}
           onChange={handleChange}
         />
-        <label htmlFor="email">email</label>
+        <label htmlFor="email">Enter Your email</label>
         <input
           type="email"
-          placeholder="Enter Your Email"
           name="email"
           value={formData.email}
           onChange={handleChange}
@@ -111,7 +110,6 @@ const SignUp = () => {
         <label htmlFor="password">password</label>
         <input
           type="password"
-          placeholder="Password"
           name="password"
           value={formData.password}
           onChange={handleChange}
@@ -119,7 +117,6 @@ const SignUp = () => {
         <label htmlFor="Cpassword">Confirm Password</label>
         <input
           type="password"
-          placeholder="Confirm Password"
           name="Cpassword"
           value={formData.Cpassword}
           onChange={handleChange}

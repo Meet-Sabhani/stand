@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { useAuth } from "../../AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -48,11 +47,9 @@ const Login = () => {
         if (userMatch) {
           localStorage.setItem("setLoging", true);
           if (userMatch.userType === "user") {
-            console.log("Navigating to /home");
             navigate("/home");
             toast.success("Login Successfully");
           } else if (userMatch.userType === "provider") {
-            console.log("Navigating to /provider");
             navigate("/provider");
             toast.success("Login Successfully");
           } else {
@@ -65,7 +62,7 @@ const Login = () => {
         }
       } else {
         toast.warn("Please sign up first");
-        navigate("/singUp");
+        navigate("/signUp");
       }
     }
   };
@@ -73,18 +70,17 @@ const Login = () => {
   return (
     <div className="Login">
       <form>
-        <label htmlFor="email">email</label>
+        <h2>Login Here</h2>
+        <label htmlFor="email">Enter email</label>
         <input
           type="email"
-          placeholder="Enter Your Email"
           name="email"
           value={formData.email}
           onChange={handleChange}
         />
-        <label htmlFor="password">password</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
-          placeholder="Password"
           name="password"
           value={formData.password}
           onChange={handleChange}

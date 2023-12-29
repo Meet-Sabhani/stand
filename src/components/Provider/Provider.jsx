@@ -15,14 +15,16 @@ const Provider = () => {
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const nav = useNavigate()
-  const isLoggedIn = localStorage.getItem('setLoging')
-  console.log(isLoggedIn)
-  useEffect(()=>{
-    if(!isLoggedIn){
-      nav('/')
+
+  const nav = useNavigate();
+
+  const isLoggedIn = localStorage.getItem("setLoging") === "true";
+  console.log(isLoggedIn);
+  useEffect(() => {
+    if (!isLoggedIn) {
+      nav("/");
     }
-  })
+  }, []);
 
   const handleClick = () => {
     if (!validateForm()) {
@@ -76,34 +78,24 @@ const Provider = () => {
   return (
     <div className="Provider">
       <Navbar />
-      <h1>Add New Event</h1>
       <form>
-        <input
-          type="text"
-          name="nameEvent"
-          placeholder="Name of Event"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="ImgSRC"
-          placeholder="Image SRC"
-          onChange={handleChange}
-        />
+        <h2>Add New Event</h2>
+        <label htmlFor="nameEvent">Event Name</label>
+        <input type="text" name="nameEvent" onChange={handleChange} />
+        <label htmlFor="ImgSRC">Image URL</label>
+        <input type="text" name="ImgSRC" onChange={handleChange} />
+        <label htmlFor="description">Description of event</label>
         <textarea
           name="description"
           cols="10"
-          rows="4"
-          placeholder="Description of event"
+          rows="1"
           onChange={handleChange}
         ></textarea>
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-        />
+        <label htmlFor="price">price</label>
+        <input type="number" name="price" onChange={handleChange} />
+        <label htmlFor="date">Event date</label>
         <input type="date" onChange={handleDateChange} />
+        <label htmlFor="date">Event Time</label>
         <input type="time" onChange={handleTimeChange} />
         <button type="button" onClick={handleClick}>
           Add Event

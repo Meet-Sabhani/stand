@@ -3,24 +3,24 @@ form {
   margin: 0 auto;
 }
 .Provider {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .Provider textarea {
-  padding: 10px 15px;
+  padding: 7px 8px;
   border: none;
   outline: none;
   font-size: 1rem;
 }
 
+.Provider form{
+  margin-top: 8px;
+}
+
 .rating i{
   color: #FEC920;
 }
-button{
-  padding: 6px;
-  border: none;
-  margin: 2px;
-}
+
 input{
   outline: none;
   border: 1px solid grey;

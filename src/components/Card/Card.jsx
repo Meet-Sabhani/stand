@@ -12,8 +12,6 @@ const Card = () => {
     time: "",
     price: "",
   });
-
-
   useEffect(() => {
     const eventDataFromLocalStorage = JSON.parse(
       localStorage.getItem("eventData")

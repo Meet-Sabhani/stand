@@ -8,11 +8,11 @@ const Navbar = () => {
 
   const logout = () => {
     const confirmed = window.confirm("Are you sure you want to log out?");
-    localStorage.setItem("setLoging", false);
 
     if (confirmed) {
       navigate("/");
       toast.success("Logout successFully");
+      localStorage.setItem("setLoging", false);
     }
   };
   return (

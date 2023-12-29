@@ -3,12 +3,32 @@
   align-items: center;
   justify-content: space-between;
   padding: 2% 8%;
+  background-color: #1F2937;
+  color: #CDACF2;
 }
 
 .navbar h1 {
-  color: blueviolet;
   font-size: 2rem;
 }
+
+.navbar h2, .navbar i{
+  color: #CDACF2 !important;
+}
+
+button{
+  background-color: #A855F7;
+  color: #fff;
+  border-radius: 5px;
+  padding: 7px 9px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+button:active{
+  scale: .96;
+}
+
 .nav-right {
   display: flex;
   gap: 10px;
