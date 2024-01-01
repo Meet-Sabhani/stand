@@ -44,8 +44,10 @@ const Login = () => {
         const userMatch = storedFormDataArray.find(
           (user) => user.email === email && user.password === password
         );
+
         if (userMatch) {
           localStorage.setItem("setLoging", true);
+          localStorage.setItem("loginData", JSON.stringify(userMatch));
           if (userMatch.userType === "user") {
             navigate("/home");
             toast.success("Login Successfully");
@@ -73,6 +75,7 @@ const Login = () => {
         <h2>Login Here</h2>
         <label htmlFor="email">Enter email</label>
         <input
+          id="email"
           type="email"
           name="email"
           value={formData.email}
@@ -80,6 +83,7 @@ const Login = () => {
         />
         <label htmlFor="password">Password</label>
         <input
+          id="password"
           type="password"
           name="password"
           value={formData.password}

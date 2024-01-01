@@ -1,0 +1,22 @@
+.home {
+}
+
+.home-text {
+  padding: 3% 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-text select {
+  padding: 5px;
+  outline: none;
+  border: 1.5px solid #9ca3af;
+  border-radius: 8px;
+  background-color: black;
+  color: #fff;
+}
+
+.home-text p {
+  color: #9ca3af;
+}

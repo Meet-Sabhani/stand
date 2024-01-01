@@ -19,11 +19,11 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
         <Route path="/provider" element={<Provider />} />
-        <Route path="*" element={<Error/>} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer
         position="top-right"
-        autoClose={2500}
+        autoClose={2300}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

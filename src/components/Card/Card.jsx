@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
-import { useNavigate } from "react-router-dom";
 
 const Card = () => {
   const [eventDataList, setEventDataList] = useState([]);
@@ -9,23 +8,22 @@ const Card = () => {
     nameEvent: "",
     description: "",
     date: "",
-    time: "",
+    startTime: "",
+    endTime: "",
     price: "",
   });
+
   useEffect(() => {
-    const eventDataFromLocalStorage = JSON.parse(
-      localStorage.getItem("eventData")
-    );
+    const eventDataFromLocalStorage = JSON.parse(localStorage.getItem("eventData"));
 
     if (Array.isArray(eventDataFromLocalStorage)) {
       setEventDataList(eventDataFromLocalStorage);
     }
   }, []);
 
-  // Retrieve user type from local storage
-  const storedData = localStorage.getItem("formData");
+  const storedData = localStorage.getItem("loginData");
   const storedFormData = JSON.parse(storedData);
-  const { userType } = storedFormData;
+  const userType = storedFormData ? storedFormData.userType : null;
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -55,14 +53,28 @@ const Card = () => {
     });
   };
 
+  function calculateTimeDuration(startTime, endTime) {
+    if (!(startTime instanceof Date) || !(endTime instanceof Date)) {
+      return "Invalid input";
+    }
+
+    const timeDiff = endTime.getTime() - startTime.getTime();
+    const totalMinutes = Math.floor(timeDiff / (1000 * 60));
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return `${hours} hours and ${minutes} minutes`;
+  }
+
   return (
     <div className="cards">
       {eventDataList.map((eventData, index) => (
         <div key={index} className="Card">
           <img src={eventData.ImgSRC} alt="" />
           <div className="description">
-            <div>
-              <h1>{eventData.nameEvent}</h1>
+            <div className="description-left">
+              <h2>{eventData.nameEvent}</h2>
               <p>{eventData.description}</p>
               <p className="rating">
                 <i className="fa-solid fa-star"></i>
@@ -72,9 +84,18 @@ const Card = () => {
               </p>
             </div>
             <div className="dateTime">
-              <h5>{eventData.date}</h5>
-              <h5>{eventData.time}</h5>
-              <h3>{eventData.price}</h3>
+              <h4>{eventData.date}</h4>
+              <h5>
+                {eventData.startTime}-{eventData.endTime}
+              </h5>
+              <h5>
+                Duration:{" "}
+                {calculateTimeDuration(
+                  new Date(`2023-01-01T${eventData.startTime}:00`),
+                  new Date(`2023-01-01T${eventData.endTime}:00`)
+                )}
+              </h5>
+              <h3>${eventData.price}</h3>
               {userType === "user" ? (
                 <button>Buy</button>
               ) : (
@@ -101,8 +122,14 @@ const Card = () => {
                       />
                       <input
                         type="text"
-                        name="time"
-                        value={editFormData.time}
+                        name="startTime"
+                        value={editFormData.startTime}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="endTime"
+                        value={editFormData.endTime}
                         onChange={handleChange}
                       />
                       <input

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+let userIdCounter = 1;
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,33 +28,42 @@ const SignUp = () => {
 
     const { name, email, password, Cpassword } = formData;
 
+    const existingDataJSON = localStorage.getItem("formData");
+    let existingData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
+
+    const isUserExists = existingData.some((user) => user.email === email);
+
+    if (isUserExists) {
+      toast.error("User with the same email already exists");
+      return;
+    }
+
     if (
       !name.trim() ||
       !email.trim() ||
       !password.trim() ||
       !Cpassword.trim()
     ) {
-      toast.error("Please fill in all fields");
-      // } else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
-      //   toast.error("Invalid email format");
-      // } else if (
-      //   password.length < 8 ||
-      //   !/[A-Z]/.test(password) ||
-      //   !/[!@#$%^&*(),.?":{}|<>]/.test(password)
-      // ) {
-      //   toast.error(
-      //     "Password must be 8+ chars, contain 1 capital letter, and 1 special character"
-      //   );
-    } else if (password !== Cpassword) {
+      toast.warn("Please fill in all fields");
+    }
+    // else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+    //   toast.error("Invalid email format");
+    // } else if (
+    //   password.length < 8 ||
+    //   !/[A-Z]/.test(password) ||
+    //   !/[!@#$%^&*(),.?":{}|<>]/.test(password)
+    // ) {
+    //   toast.error(
+    //     "Password must be 8+ chars, contain 1 capital letter, and 1 special character"
+    //   );
+    // }
+    else if (password !== Cpassword) {
       toast.error("Passwords do not match");
     } else {
       toast.success("Data submitted successfully. Now, login");
       navigate("/");
 
-      const newFormData = { ...formData };
-
-      const existingDataJSON = localStorage.getItem("formData");
-      let existingData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
+      const newFormData = { ...formData }; // Add the unique ID
 
       if (!Array.isArray(existingData)) {
         existingData = [existingData];
@@ -60,10 +71,6 @@ const SignUp = () => {
 
       existingData.push(newFormData);
       localStorage.setItem("formData", JSON.stringify(existingData));
-
-      // console.log("Form Data:", newFormData);
-
-      // localStorage.setItem("formData", JSON.stringify(formData));
     }
   };
 
@@ -73,6 +80,7 @@ const SignUp = () => {
         <h2>Singup Here</h2>
         <label htmlFor="name">Enter Your name</label>
         <input
+          id="name"
           type="text"
           name="name"
           value={formData.name}
@@ -80,6 +88,7 @@ const SignUp = () => {
         />
         <label htmlFor="email">Enter Your email</label>
         <input
+          id="email"
           type="email"
           name="email"
           value={formData.email}
@@ -109,6 +118,7 @@ const SignUp = () => {
         </div>
         <label htmlFor="password">password</label>
         <input
+          id="password"
           type="password"
           name="password"
           value={formData.password}
@@ -116,6 +126,7 @@ const SignUp = () => {
         />
         <label htmlFor="Cpassword">Confirm Password</label>
         <input
+          id="Cpassword"
           type="password"
           name="Cpassword"
           value={formData.Cpassword}

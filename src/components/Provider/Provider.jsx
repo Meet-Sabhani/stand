@@ -14,12 +14,14 @@ const Provider = () => {
   });
 
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
   const nav = useNavigate();
 
   const isLoggedIn = localStorage.getItem("setLoging") === "true";
   console.log(isLoggedIn);
+
   useEffect(() => {
     if (!isLoggedIn) {
       nav("/");
@@ -32,7 +34,7 @@ const Provider = () => {
       return;
     }
 
-    const newFormData = { ...eventData, date, time };
+    const newFormData = { ...eventData, date, startTime, endTime };
 
     const existingDataJSON = localStorage.getItem("eventData");
     let existingData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
@@ -43,13 +45,12 @@ const Provider = () => {
 
     existingData.push(newFormData);
     localStorage.setItem("eventData", JSON.stringify(existingData));
-
     console.log("Form Data:", newFormData);
     toast.success("Event Added Successfully");
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
     setEventData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -61,7 +62,11 @@ const Provider = () => {
   };
 
   const handleTimeChange = (e) => {
-    setTime(e.target.value);
+    setStartTime(e.target.value);
+  };
+
+  const handleEndTimeChange = (e) => {
+    setEndTime(e.target.value);
   };
 
   const validateForm = () => {
@@ -71,13 +76,15 @@ const Provider = () => {
       eventData.description.trim() !== "" &&
       eventData.price.trim() !== "" &&
       date.trim() !== "" &&
-      time.trim() !== ""
+      startTime.trim() !== "" &&
+      endTime.trim() !== ""
     );
   };
 
   return (
     <div className="Provider">
       <Navbar />
+      <Card />
       <form>
         <h2>Add New Event</h2>
         <label htmlFor="nameEvent">Event Name</label>
@@ -91,17 +98,18 @@ const Provider = () => {
           rows="1"
           onChange={handleChange}
         ></textarea>
-        <label htmlFor="price">price</label>
+        <label htmlFor="price">Price</label>
         <input type="number" name="price" onChange={handleChange} />
         <label htmlFor="date">Event date</label>
         <input type="date" onChange={handleDateChange} />
-        <label htmlFor="date">Event Time</label>
+        <label htmlFor="startTime">Start Time</label>
         <input type="time" onChange={handleTimeChange} />
+        <label htmlFor="endTime">End Time</label>
+        <input type="time" onChange={handleEndTimeChange} />
         <button type="button" onClick={handleClick}>
           Add Event
         </button>
       </form>
-      <Card />
     </div>
   );
 };
