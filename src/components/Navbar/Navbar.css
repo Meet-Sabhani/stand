@@ -9,6 +9,9 @@
   align-items: center;
   justify-content: space-between;
 }
+.nav-top h1 {
+  color: #a855f7;
+}
 
 .navbar h2 {
   color: #fff;
@@ -39,23 +42,42 @@ button:active {
   align-items: center;
   color: #a0a0a0;
 }
+
 .nav-right h2 {
   text-align: center;
 }
 
 .navbar-bottom {
+  margin-top: 2%;
   background-color: #1f2937;
   display: flex;
+  align-items: center;
   border: 1.5px solid #9ca3af;
   padding: 10px;
   border-radius: 9px;
 }
 
-.navbar-bottom input {
+.nav-b-left {
+  display: flex;
+  align-items: center;
+  gap: 2%;
   width: 30%;
+  color: #fff;
+}
+.nav-b-left input {
+  outline: none;
+  border: none;
+  padding: 10px 8px;
 }
 .nav-b-right {
   width: 70%;
   display: flex;
   justify-content: space-around;
+}
+.nav-b-right select {
+  padding: 5px;
+  outline: none;
+  border: none;
+  background-color: rgb(76, 76, 76);
+  color: #fff;
 }

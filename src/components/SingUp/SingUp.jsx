@@ -25,7 +25,7 @@ const SignUp = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
+    
     const { name, email, password, Cpassword } = formData;
 
     const existingDataJSON = localStorage.getItem("formData");

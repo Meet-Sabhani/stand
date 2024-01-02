@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
 
-const Card = () => {
+const Card = ({ sortOption }) => {
   const [eventDataList, setEventDataList] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [editFormData, setEditFormData] = useState({
@@ -14,7 +14,9 @@ const Card = () => {
   });
 
   useEffect(() => {
-    const eventDataFromLocalStorage = JSON.parse(localStorage.getItem("eventData"));
+    const eventDataFromLocalStorage = JSON.parse(
+      localStorage.getItem("eventData")
+    );
 
     if (Array.isArray(eventDataFromLocalStorage)) {
       setEventDataList(eventDataFromLocalStorage);
@@ -67,9 +69,28 @@ const Card = () => {
     return `${hours} hours and ${minutes} minutes`;
   }
 
+  const sortEventData = (dataToSort) => {
+    switch (sortOption) {
+      case "price":
+        return dataToSort.sort((a, b) => a.price - b.price);
+      case "duration":
+        return dataToSort.sort(
+          (a, b) =>
+            new Date(`2023-01-01T${a.endTime}:00`) -
+            new Date(`2023-01-01T${b.endTime}:00`)
+        );
+      case "date":
+        return dataToSort.sort((a, b) => new Date(a.date) - new Date(b.date));
+      default:
+        return dataToSort;
+    }
+  };
+
+  const sortedEventDataList = sortEventData(eventDataList);
+
   return (
     <div className="cards">
-      {eventDataList.map((eventData, index) => (
+      {sortedEventDataList.map((eventData, index) => (
         <div key={index} className="Card">
           <img src={eventData.ImgSRC} alt="" />
           <div className="description">
@@ -115,25 +136,25 @@ const Card = () => {
                         onChange={handleChange}
                       />
                       <input
-                        type="text"
+                        type="date"
                         name="date"
                         value={editFormData.date}
                         onChange={handleChange}
                       />
                       <input
-                        type="text"
+                        type="time"
                         name="startTime"
                         value={editFormData.startTime}
                         onChange={handleChange}
                       />
                       <input
-                        type="text"
+                        type="time"
                         name="endTime"
                         value={editFormData.endTime}
                         onChange={handleChange}
                       />
                       <input
-                        type="text"
+                        type="number"
                         name="price"
                         value={editFormData.price}
                         onChange={handleChange}
