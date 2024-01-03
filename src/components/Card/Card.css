@@ -1,5 +1,4 @@
 .Card {
-  /* width: 100%; */
   border-radius: 8px;
   transition: 0.5s ease-in-out;
   background-color: #1f2937;
@@ -41,9 +40,9 @@ button {
   margin-right: 2%;
 }
 
-.cards {
+.card-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 2rem 8%;
 }
@@ -55,7 +54,13 @@ input {
 }
 
 @media (max-width: 992px) {
-  .cards {
+  .card-container {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    grid-template-columns: 1fr;
   }
 }

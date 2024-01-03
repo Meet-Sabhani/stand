@@ -14,12 +14,18 @@ const AddEvent = () => {
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   const { checkAuthAndNavigate } = Reuseable();
+
   useEffect(() => {
     checkAuthAndNavigate();
   }, []);
+
+  const getUserID = () => {
+    const loginData = localStorage.getItem("loginData");
+    return loginData ? JSON.parse(loginData).id : null;
+  };
 
   const handleClick = () => {
     if (!validateForm()) {
@@ -27,20 +33,22 @@ const AddEvent = () => {
       return;
     }
 
-    const newFormData = { ...eventData, date, startTime, endTime };
+    const newFormData = {
+      ...eventData,
+      date,
+      startTime,
+      endTime,
+      id: getUserID(),
+    };
 
     const existingDataJSON = localStorage.getItem("eventData");
-    let existingData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
-
-    if (!Array.isArray(existingData)) {
-      existingData = [existingData];
-    }
+    const existingData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
 
     existingData.push(newFormData);
     localStorage.setItem("eventData", JSON.stringify(existingData));
     console.log("Form Data:", newFormData);
     toast.success("Event Added Successfully");
-    nav("/provider");
+    navigate("/provider");
   };
 
   const handleChange = ({ target }) => {
@@ -77,6 +85,7 @@ const AddEvent = () => {
       endTime.trim() !== ""
     );
   };
+
   return (
     <div>
       <form>

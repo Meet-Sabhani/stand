@@ -6,13 +6,13 @@ form {
   color: #8ca3af;
 }
 
-.addBtn{
+.addBtn {
   padding: 1% 8%;
   display: flex;
   justify-content: center;
 }
 
-.addBtn button{
+.addBtn button {
   padding: 10px 12px;
   font-size: 1rem;
 }
@@ -24,7 +24,7 @@ form {
   font-size: 1rem;
 }
 
-.Provider select{
+.Provider select {
   padding: 2% 8%;
   padding: 5px;
   outline: none;
@@ -34,15 +34,15 @@ form {
   color: #fff;
 }
 
-.Provider form{
+.Provider form {
   margin-top: 8px;
 }
 
-.rating i{
-  color: #FEC920;
+.rating i {
+  color: #fec920;
 }
 
-input{
+input {
   outline: none;
   border: 1px solid grey;
   padding: 2px 3px;

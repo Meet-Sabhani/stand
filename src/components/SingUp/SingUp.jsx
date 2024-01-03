@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-let userIdCounter = 1;
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +10,16 @@ const SignUp = () => {
     Cpassword: "",
     userType: "user",
   });
+
+  const [userIdCounter, setUserIdCounter] = useState(1);
+
+  useEffect(() => {
+    // Retrieve userIdCounter from local storage when the component mounts
+    const storedUserIdCounter = localStorage.getItem("userIdCounter");
+    if (storedUserIdCounter) {
+      setUserIdCounter(parseInt(storedUserIdCounter));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,8 +33,8 @@ const SignUp = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    
-    const { name, email, password, Cpassword } = formData;
+
+    const { name, email, password, Cpassword, id } = formData;
 
     const existingDataJSON = localStorage.getItem("formData");
     let existingData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
@@ -63,7 +71,8 @@ const SignUp = () => {
       toast.success("Data submitted successfully. Now, login");
       navigate("/");
 
-      const newFormData = { ...formData }; // Add the unique ID
+      const newFormData = { ...formData };
+      newFormData.id = userIdCounter;
 
       if (!Array.isArray(existingData)) {
         existingData = [existingData];
@@ -71,6 +80,9 @@ const SignUp = () => {
 
       existingData.push(newFormData);
       localStorage.setItem("formData", JSON.stringify(existingData));
+
+      setUserIdCounter((prevUserIdCounter) => prevUserIdCounter + 1);
+      localStorage.setItem("userIdCounter", String(userIdCounter + 1));
     }
   };
 

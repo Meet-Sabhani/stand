@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
 
-const Card = ({ sortOption }) => {
-  const [eventDataList, setEventDataList] = useState([]);
+const Card = ({ sortOption, userEvents }) => {
+  const [eventDataList, setEventDataList] = useState(userEvents);
   const [editIndex, setEditIndex] = useState(null);
   const [editFormData, setEditFormData] = useState({
     nameEvent: "",
@@ -13,19 +13,21 @@ const Card = ({ sortOption }) => {
     price: "",
   });
 
-  useEffect(() => {
-    const eventDataFromLocalStorage = JSON.parse(
-      localStorage.getItem("eventData")
-    );
-
-    if (Array.isArray(eventDataFromLocalStorage)) {
-      setEventDataList(eventDataFromLocalStorage);
-    }
-  }, []);
-
   const storedData = localStorage.getItem("loginData");
   const storedFormData = JSON.parse(storedData);
   const userType = storedFormData ? storedFormData.userType : null;
+
+  useEffect(() => {
+    if (userType === "user") {
+      const eventDataFromLocalStorage = JSON.parse(
+        localStorage.getItem("eventData")
+      );
+      console.log("localStorage eventData:", eventDataFromLocalStorage);
+      setEventDataList(eventDataFromLocalStorage);
+    } else {
+      setEventDataList(userEvents);
+    }
+  }, [userType, userEvents]);
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -70,6 +72,10 @@ const Card = ({ sortOption }) => {
   }
 
   const sortEventData = (dataToSort) => {
+    if (!dataToSort || !Array.isArray(dataToSort)) {
+      return [];
+    }
+
     switch (sortOption) {
       case "price":
         return dataToSort.sort((a, b) => a.price - b.price);
@@ -89,93 +95,106 @@ const Card = ({ sortOption }) => {
   const sortedEventDataList = sortEventData(eventDataList);
 
   return (
-    <div className="cards">
-      {sortedEventDataList.map((eventData, index) => (
-        <div key={index} className="Card">
-          <img src={eventData.ImgSRC} alt="" />
-          <div className="description">
-            <div className="description-left">
-              <h2>{eventData.nameEvent}</h2>
-              <p>{eventData.description}</p>
-              <p className="rating">
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-              </p>
-            </div>
-            <div className="dateTime">
-              <h4>{eventData.date}</h4>
-              <h5>
-                {eventData.startTime}-{eventData.endTime}
-              </h5>
-              <h5>
-                Duration:{" "}
-                {calculateTimeDuration(
-                  new Date(`2023-01-01T${eventData.startTime}:00`),
-                  new Date(`2023-01-01T${eventData.endTime}:00`)
-                )}
-              </h5>
-              <h3>${eventData.price}</h3>
-              {userType === "user" ? (
-                <button>Buy</button>
-              ) : (
-                <>
-                  {editIndex === index ? (
-                    <>
-                      <input
-                        type="text"
-                        name="nameEvent"
-                        value={editFormData.nameEvent}
-                        onChange={handleChange}
-                      />
-                      <input
-                        type="text"
-                        name="description"
-                        value={editFormData.description}
-                        onChange={handleChange}
-                      />
-                      <input
-                        type="date"
-                        name="date"
-                        value={editFormData.date}
-                        onChange={handleChange}
-                      />
-                      <input
-                        type="time"
-                        name="startTime"
-                        value={editFormData.startTime}
-                        onChange={handleChange}
-                      />
-                      <input
-                        type="time"
-                        name="endTime"
-                        value={editFormData.endTime}
-                        onChange={handleChange}
-                      />
-                      <input
-                        type="number"
-                        name="price"
-                        value={editFormData.price}
-                        onChange={handleChange}
-                      />
-                      <button onClick={handleSaveEdit}>Save</button>
-                      <button onClick={() => setEditIndex(null)}>Cancel</button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => handleEdit(index)}>Edit</button>
-                      <button onClick={() => handleDelete(index)}>
-                        Delete
-                      </button>
-                    </>
+    <div className="card-container">
+      {sortedEventDataList.length === 0 ? (
+        <p>No events to display</p>
+      ) : (
+        sortedEventDataList.map((eventData, index) => (
+          <div key={index} className="Card">
+            <img src={eventData.ImgSRC} alt="" />
+            <div className="description">
+              <div className="description-left">
+                <h2>{eventData.nameEvent}</h2>
+                <p>{eventData.description}</p>
+                <p className="rating">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </p>
+              </div>
+              <div className="dateTime">
+                <h4>{eventData.date}</h4>
+                <h5>
+                  {eventData.startTime}-{eventData.endTime}
+                </h5>
+                <h5>
+                  Duration:{" "}
+                  {calculateTimeDuration(
+                    new Date(`2023-01-01T${eventData.startTime}:00`),
+                    new Date(`2023-01-01T${eventData.endTime}:00`)
                   )}
-                </>
-              )}
+                </h5>
+                <h3>${eventData.price}</h3>
+                {userType === "user" ? (
+                  <button>Buy</button>
+                ) : (
+                  <>
+                    {editIndex === index ? (
+                      <>
+                        <input
+                          type="text"
+                          name="ImgSRC"
+                          placeholder="Image Source"
+                          value={editFormData.ImgSRC}
+                          onChange={handleChange}
+                        />
+                        <input
+                          type="text"
+                          name="nameEvent"
+                          value={editFormData.nameEvent}
+                          onChange={handleChange}
+                        />
+                        <input
+                          type="text"
+                          name="description"
+                          value={editFormData.description}
+                          onChange={handleChange}
+                        />
+                        <input
+                          type="date"
+                          name="date"
+                          value={editFormData.date}
+                          onChange={handleChange}
+                        />
+                        <input
+                          type="time"
+                          name="startTime"
+                          value={editFormData.startTime}
+                          onChange={handleChange}
+                        />
+                        <input
+                          type="time"
+                          name="endTime"
+                          value={editFormData.endTime}
+                          onChange={handleChange}
+                        />
+                        <input
+                          type="number"
+                          name="price"
+                          value={editFormData.price}
+                          onChange={handleChange}
+                        />
+                        <button onClick={handleSaveEdit}>Save</button>
+                        <button onClick={() => setEditIndex(null)}>
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button onClick={() => handleEdit(index)}>Edit</button>
+                        <button onClick={() => handleDelete(index)}>
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

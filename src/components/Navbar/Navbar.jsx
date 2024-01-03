@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({ onSortOptionChange, onFilterChange }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = useState("");
 
@@ -20,7 +20,6 @@ const Navbar = ({ onSortOptionChange, onFilterChange }) => {
     }
   };
 
-
   return (
     <header className="navbar">
       <div className="nav-top">
@@ -32,7 +31,7 @@ const Navbar = ({ onSortOptionChange, onFilterChange }) => {
           <button onClick={() => logout()}>Logout</button>
         </div>
       </div>
-      <div className="navbar-bottom ">
+      {/* <div className="navbar-bottom ">
         <div className="nav-b-left">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input
@@ -71,7 +70,7 @@ const Navbar = ({ onSortOptionChange, onFilterChange }) => {
             </select>
           </div>
         </div>
-      </div>
+      </div> */}
     </header>
   );
 };

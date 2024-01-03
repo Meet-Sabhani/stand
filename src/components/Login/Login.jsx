@@ -46,6 +46,7 @@ const Login = () => {
         );
 
         if (userMatch) {
+          console.log(userMatch);
           localStorage.setItem("setLoging", true);
           localStorage.setItem("loginData", JSON.stringify(userMatch));
           if (userMatch.userType === "user") {
