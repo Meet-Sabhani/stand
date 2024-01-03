@@ -8,9 +8,14 @@ import Card from "../Card/Card";
 const Provider = () => {
   const { checkAuthAndNavigate } = Reuseable();
   const nav = useNavigate();
-
+  const storedData = localStorage.getItem("loginData");
+  const storedFormData = JSON.parse(storedData);
+  const userType = storedFormData ? storedFormData.userType : null;
   useEffect(() => {
     checkAuthAndNavigate();
+    if (userType === "user") {
+      nav("/home");
+    }
   }, []);
 
   const [sortOption, setSortOption] = useState("date");
@@ -20,10 +25,15 @@ const Provider = () => {
   useEffect(() => {
     const loginUser = JSON.parse(localStorage.getItem("loginData"));
     const allEvent = JSON.parse(localStorage.getItem("eventData"));
-    const filteredEvents = allEvent.filter(
-      (event) => event.id === loginUser.id
-    );
-    setUserEvents(filteredEvents);
+
+    if (allEvent && Array.isArray(allEvent) && allEvent.length > 0) {
+      const filteredEvents = allEvent.filter(
+        (event) => event.id === loginUser.id
+      );
+      setUserEvents(filteredEvents);
+    } else {
+      setUserEvents([]);
+    }
   }, []);
 
   console.log("userEvents", userEvents);

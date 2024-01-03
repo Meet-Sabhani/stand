@@ -18,8 +18,15 @@ const AddEvent = () => {
 
   const { checkAuthAndNavigate } = Reuseable();
 
+  const storedData = localStorage.getItem("loginData");
+  const storedFormData = JSON.parse(storedData);
+  const userType = storedFormData ? storedFormData.userType : null;
+
   useEffect(() => {
     checkAuthAndNavigate();
+    if (userType === "user") {
+      navigate("/home");
+    }
   }, []);
 
   const getUserID = () => {
@@ -27,9 +34,36 @@ const AddEvent = () => {
     return loginData ? JSON.parse(loginData).id : null;
   };
 
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const getCurrentTime = () => {
+    const today = new Date();
+    const hours = String(today.getHours()).padStart(2, "0");
+    const minutes = String(today.getMinutes()).padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
   const handleClick = () => {
     if (!validateForm()) {
       toast.error("Please provide valid input for all fields");
+      return;
+    }
+
+    const existingNameJSON = localStorage.getItem("eventData");
+    let existingNames = existingNameJSON ? JSON.parse(existingNameJSON) : [];
+
+    const isNameExists = existingNames.some(
+      (user) => user.nameEvent === eventData.nameEvent
+    );
+
+    if (isNameExists) {
+      toast.error("Event with the same name already exists");
       return;
     }
 
@@ -87,8 +121,8 @@ const AddEvent = () => {
   };
 
   return (
-    <div>
-      <form>
+    <>
+      <form className="AddEvent">
         <h2>Add New Event</h2>
         <label htmlFor="nameEvent">Event Name</label>
         <input type="text" name="nameEvent" onChange={handleChange} />
@@ -97,23 +131,27 @@ const AddEvent = () => {
         <label htmlFor="description">Description of event</label>
         <textarea
           name="description"
-          cols="10"
-          rows="2"
+          cols="1"
+          rows="1"
           onChange={handleChange}
         ></textarea>
         <label htmlFor="price">Price</label>
         <input type="number" name="price" onChange={handleChange} />
         <label htmlFor="date">Event date</label>
-        <input type="date" onChange={handleDateChange} />
+        <input type="date" onChange={handleDateChange} min={getCurrentDate()} />
         <label htmlFor="startTime">Start Time</label>
-        <input type="time" onChange={handleTimeChange} />
+        <input type="time" onChange={handleTimeChange} min={getCurrentTime()} />
         <label htmlFor="endTime">End Time</label>
-        <input type="time" onChange={handleEndTimeChange} />
+        <input
+          type="time"
+          onChange={handleEndTimeChange}
+          min={getCurrentTime()}
+        />
         <button type="button" onClick={handleClick}>
           Add Event
         </button>
       </form>
-    </div>
+    </>
   );
 };
 
