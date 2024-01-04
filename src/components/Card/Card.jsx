@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
+import { toast } from "react-toastify";
 
 const Card = ({ sortOption, userEvents }) => {
   const [eventDataList, setEventDataList] = useState(userEvents);
@@ -22,7 +23,6 @@ const Card = ({ sortOption, userEvents }) => {
       const eventDataFromLocalStorage = JSON.parse(
         localStorage.getItem("eventData")
       );
-      console.log("localStorage eventData:", eventDataFromLocalStorage);
       setEventDataList(eventDataFromLocalStorage);
     } else {
       setEventDataList(userEvents);
@@ -36,7 +36,7 @@ const Card = ({ sortOption, userEvents }) => {
 
   const handleSaveEdit = () => {
     const updatedEventDataList = [...eventDataList];
-    updatedEventDataList[editIndex] = editFormData;
+    updatedEventDataList[editIndex] = { ...editFormData }; // Copy the edited data
     setEventDataList(updatedEventDataList);
     localStorage.setItem("eventData", JSON.stringify(updatedEventDataList));
     setEditIndex(null);
@@ -94,6 +94,49 @@ const Card = ({ sortOption, userEvents }) => {
 
   const sortedEventDataList = sortEventData(eventDataList);
 
+  const [purchasedItems, setPurchasedItems] = useState([]);
+  const [bookedEventIds, setBookedEventIds] = useState([]);
+
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("loginData")) || {};
+    const loggedInUserId = storedData.id;
+    setUserId(loggedInUserId);
+
+    const storedPurchasedItems =
+      JSON.parse(localStorage.getItem("purchasedItems")) || [];
+    const userBookedEventIds = storedPurchasedItems
+      .filter((item) => item.userInfo.id === loggedInUserId)
+      .map((item) => item.eventData.id);
+
+    setBookedEventIds(userBookedEventIds);
+  }, []);
+
+  const handleBuy = (eventData) => {
+    const storedData = JSON.parse(localStorage.getItem("loginData")) || {};
+    const loggedInUserId = storedData.id;
+
+    const purchaseInfo = {
+      eventData: eventData,
+      userInfo: storedData,
+    };
+
+    setBookedEventIds((prevBookedEventIds) => [
+      ...prevBookedEventIds,
+      eventData.id,
+    ]);
+
+    const storedPurchasedItems =
+      JSON.parse(localStorage.getItem("purchasedItems")) || [];
+    const updatedPurchasedItems = [...storedPurchasedItems, purchaseInfo];
+    localStorage.setItem(
+      "purchasedItems",
+      JSON.stringify(updatedPurchasedItems)
+    );
+
+    toast.success("Item purchased successfully!");
+  };
   return (
     <div className="card-container">
       {sortedEventDataList.length === 0 ? (
@@ -127,7 +170,12 @@ const Card = ({ sortOption, userEvents }) => {
                 </h5>
                 <h3>${eventData.price}</h3>
                 {userType === "user" ? (
-                  <button>Buy</button>
+                  <button
+                    onClick={() => handleBuy(eventData)}
+                    disabled={bookedEventIds.includes(eventData.id)}
+                  >
+                    {bookedEventIds.includes(eventData.id) ? "Booked" : "Buy"}
+                  </button>
                 ) : (
                   <>
                     {editIndex === index ? (

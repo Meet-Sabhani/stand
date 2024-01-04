@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Provider.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Reuseable from "../Reuseable/Reuseable";
 import Card from "../Card/Card";
 
@@ -13,9 +13,6 @@ const Provider = () => {
   const userType = storedFormData ? storedFormData.userType : null;
   useEffect(() => {
     checkAuthAndNavigate();
-    if (userType === "user") {
-      nav("/home");
-    }
   }, []);
 
   const [sortOption, setSortOption] = useState("date");
@@ -28,7 +25,7 @@ const Provider = () => {
 
     if (allEvent && Array.isArray(allEvent) && allEvent.length > 0) {
       const filteredEvents = allEvent.filter(
-        (event) => event.id === loginUser.id
+        (event) => event.providerId === loginUser.id
       );
       setUserEvents(filteredEvents);
     } else {
@@ -43,6 +40,9 @@ const Provider = () => {
       <Navbar />
       <div className="addBtn">
         <button onClick={() => nav("/addEvent")}>Add Event +</button>
+        <button>
+          <Link to="/bookings">See Bookings</Link>
+        </button>
       </div>
       <div className="home-text">
         <div>

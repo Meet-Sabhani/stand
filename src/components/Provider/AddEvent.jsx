@@ -22,7 +22,13 @@ const AddEvent = () => {
   const storedFormData = JSON.parse(storedData);
   const userType = storedFormData ? storedFormData.userType : null;
 
+  const [eventIdCounter, setEventIdCounter] = useState(1);
+
   useEffect(() => {
+    const storedEventIdCounter = localStorage.getItem("eventIdCounter");
+    if (storedEventIdCounter) {
+      setEventIdCounter(parseInt(storedEventIdCounter));
+    }
     checkAuthAndNavigate();
     if (userType === "user") {
       navigate("/home");
@@ -72,7 +78,8 @@ const AddEvent = () => {
       date,
       startTime,
       endTime,
-      id: getUserID(),
+      providerId: getUserID(),
+      id: eventIdCounter,
     };
 
     const existingDataJSON = localStorage.getItem("eventData");
@@ -83,6 +90,9 @@ const AddEvent = () => {
     console.log("Form Data:", newFormData);
     toast.success("Event Added Successfully");
     navigate("/provider");
+
+    setEventIdCounter((prevEventIdCounter) => prevEventIdCounter + 1);
+    localStorage.setItem("eventIdCounter", String(eventIdCounter + 1));
   };
 
   const handleChange = ({ target }) => {
@@ -125,24 +135,41 @@ const AddEvent = () => {
       <form className="AddEvent">
         <h2>Add New Event</h2>
         <label htmlFor="nameEvent">Event Name</label>
-        <input type="text" name="nameEvent" onChange={handleChange} />
+        <input
+          type="text"
+          id="nameEvent"
+          name="nameEvent"
+          onChange={handleChange}
+        />
         <label htmlFor="ImgSRC">Image URL</label>
-        <input type="text" name="ImgSRC" onChange={handleChange} />
+        <input type="text" id="ImgSRC" name="ImgSRC" onChange={handleChange} />
         <label htmlFor="description">Description of event</label>
         <textarea
+          id="description"
           name="description"
           cols="1"
           rows="1"
           onChange={handleChange}
         ></textarea>
         <label htmlFor="price">Price</label>
-        <input type="number" name="price" onChange={handleChange} />
+        <input type="number" id="price" name="price" onChange={handleChange} />
         <label htmlFor="date">Event date</label>
-        <input type="date" onChange={handleDateChange} min={getCurrentDate()} />
+        <input
+          type="date"
+          id="date"
+          onChange={handleDateChange}
+          min={getCurrentDate()}
+        />
         <label htmlFor="startTime">Start Time</label>
-        <input type="time" onChange={handleTimeChange} min={getCurrentTime()} />
+        <input
+          type="time"
+          id="startTime"
+          onChange={handleTimeChange}
+          min={getCurrentTime()}
+        />
         <label htmlFor="endTime">End Time</label>
         <input
+          id="endTime"
           type="time"
           onChange={handleEndTimeChange}
           min={getCurrentTime()}

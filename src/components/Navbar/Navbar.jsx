@@ -31,7 +31,7 @@ const Navbar = () => {
           <button onClick={() => logout()}>Logout</button>
         </div>
       </div>
-      {/* <div className="navbar-bottom ">
+      <div className="navbar-bottom ">
         <div className="nav-b-left">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input
@@ -70,7 +70,7 @@ const Navbar = () => {
             </select>
           </div>
         </div>
-      </div> */}
+      </div>
     </header>
   );
 };

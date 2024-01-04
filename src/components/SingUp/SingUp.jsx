@@ -14,7 +14,6 @@ const SignUp = () => {
   const [userIdCounter, setUserIdCounter] = useState(1);
 
   useEffect(() => {
-    // Retrieve userIdCounter from local storage when the component mounts
     const storedUserIdCounter = localStorage.getItem("userIdCounter");
     if (storedUserIdCounter) {
       setUserIdCounter(parseInt(storedUserIdCounter));

@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./components/SingUp/SingUp";
 import Error from "./components/404 Error/Error";
 import AddEvent from "./components/Provider/AddEvent";
+import Bookings from "./components/Bookings/Bookings";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/provider" element={<Provider />} />
         <Route path="/addEvent" element={<AddEvent />} />
+        <Route path="/bookings" element={<Bookings/>} />
         <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer
