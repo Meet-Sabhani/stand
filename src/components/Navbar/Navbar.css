@@ -81,3 +81,41 @@ button:active {
   background-color: rgb(76, 76, 76);
   color: #fff;
 }
+
+.menu {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .nav-right {
+    display: none;
+  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .line {
+    height: 5px;
+    background-color: #fff;
+    width: 35px;
+  }
+
+  .showdata {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background-color: #1f2937;
+    padding: 30px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .showdata {
+    top: 60px;
+  }
+}

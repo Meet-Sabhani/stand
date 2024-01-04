@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -20,18 +20,33 @@ const Navbar = () => {
     }
   };
 
+  const showdata = () => {
+    let navRight = document.querySelector(".nav-right");
+    navRight.classList.toggle("showdata");
+  };
+
   return (
     <header className="navbar">
       <div className="nav-top">
         <h1>VENUSS</h1>
+        <div className="menu" onClick={() => showdata()}>
+          <div className="line"></div>
+          <div className="line"></div>
+          <div className="line"></div>
+        </div>
         <div className="nav-right">
+          {parsedData.userType === "user" ? (
+            <Link to="/home">Home</Link>
+          ) : (
+            <Link to="/provider">Home</Link>
+          )}
           <i className="fa-solid fa-envelope"></i>
           <i className="fa-solid fa-bell"></i>
           <h2>Welcome, {parsedData.name}</h2>
           <button onClick={() => logout()}>Logout</button>
         </div>
       </div>
-      <div className="navbar-bottom ">
+      {/* <div className="navbar-bottom ">
         <div className="nav-b-left">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input
@@ -70,7 +85,7 @@ const Navbar = () => {
             </select>
           </div>
         </div>
-      </div>
+      </div> */}
     </header>
   );
 };

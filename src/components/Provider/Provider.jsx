@@ -40,9 +40,7 @@ const Provider = () => {
       <Navbar />
       <div className="addBtn">
         <button onClick={() => nav("/addEvent")}>Add Event +</button>
-        <button>
-          <Link to="/bookings">See Bookings</Link>
-        </button>
+        <Link to="/bookings">See Bookings</Link>
       </div>
       <div className="home-text">
         <div>

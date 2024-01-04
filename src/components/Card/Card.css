@@ -18,11 +18,16 @@
   display: flex;
   justify-content: space-between;
   padding: 0.8rem 1.2rem;
+  gap: 4%;
 }
 
 .description-left {
   width: 50%;
   color: #fff;
+}
+
+.description-left h2{
+  font-size: 1rem;
 }
 
 .description-left p {
@@ -57,10 +62,16 @@ input {
   .card-container {
     grid-template-columns: 1fr 1fr;
   }
+  .Card{
+    height: 360px;
+  }
 }
 
 @media (max-width: 600px) {
   .card-container {
     grid-template-columns: 1fr;
+  }
+  .Card{
+    height: 350px;
   }
 }

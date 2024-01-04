@@ -12,10 +12,12 @@ import SignUp from "./components/SingUp/SingUp";
 import Error from "./components/404 Error/Error";
 import AddEvent from "./components/Provider/AddEvent";
 import Bookings from "./components/Bookings/Bookings";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
     <>
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

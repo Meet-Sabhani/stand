@@ -17,6 +17,26 @@ form {
   font-size: 1rem;
 }
 
+.addBtn a {
+  padding: 10px 12px;
+  font-size: 1rem;
+  padding: 10px 15px;
+  background-color: #a855f7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+
+.addBtn a:hover {
+  background-color: #6b21a8;
+}
+
+.addBtn a:active {
+  scale: 0.9;
+}
+
 .AddEvent textarea {
   padding: 7px 8px;
   border: none;
@@ -46,4 +66,16 @@ input {
   outline: none;
   border: 1px solid grey;
   padding: 2px 3px;
+}
+.AddEvent{
+  margin: 4% auto;
+}
+@media (max-width: 992px) {
+  .addBtn {
+    padding: 4% 8%;
+  }
+  form {
+    width: 80%;
+  }
+  
 }

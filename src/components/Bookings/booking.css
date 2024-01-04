@@ -19,9 +19,9 @@
   box-shadow: 3px 3px 10px #636363;
 }
 
-.Booking-card h3{
-    text-align: center;
-    padding: 2%;
+.Booking-card h3 {
+  text-align: center;
+  padding: 2%;
 }
 
 .Booking-card img {
@@ -31,4 +31,16 @@
 .flex {
   display: flex;
   gap: 7px;
+}
+
+@media (max-width: 992px) {
+  .Booking-card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 552px) {
+  .Booking-card-container {
+    grid-template-columns: 1fr;
+  }
 }

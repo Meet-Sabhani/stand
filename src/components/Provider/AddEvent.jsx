@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Reuseable from "../Reuseable/Reuseable";
+import Navbar from "../Navbar/Navbar";
 
 const AddEvent = () => {
   const [eventData, setEventData] = useState({
@@ -132,6 +133,7 @@ const AddEvent = () => {
 
   return (
     <>
+    <Navbar/>
       <form className="AddEvent">
         <h2>Add New Event</h2>
         <label htmlFor="nameEvent">Event Name</label>

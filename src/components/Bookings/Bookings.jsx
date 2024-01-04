@@ -28,14 +28,12 @@ const Bookings = () => {
               alt={booking.eventData.nameEvent}
             />
             <div className="flex">
-              <div>{booking.eventData.nameEvent}</div>
-              <div>${booking.eventData.price}</div>
+              <div>Event :- {booking.eventData.nameEvent}</div>
+              <div> Price : ${booking.eventData.price}</div>
             </div>
             <h3>User Info</h3>
-            <div className="flex">
-              <div>{booking.userInfo.name}</div>
-              <p>{booking.userInfo.email}</p>
-            </div>
+              <div>Name : {booking.userInfo.name}</div>
+              <p>Email : {booking.userInfo.email}</p>
           </div>
         ))}
       </div>
