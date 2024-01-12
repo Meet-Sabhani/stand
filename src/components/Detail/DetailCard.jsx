@@ -5,31 +5,24 @@ import { toast } from "react-toastify";
 
 const DetailCard = () => {
   const { productId } = useParams();
-  console.log("productId", productId);
   const event = JSON.parse(localStorage.getItem("eventData"));
   const matchingEvent = event.find((item) => item.id === parseInt(productId));
 
   const currentUserInfo = JSON.parse(localStorage?.getItem("loginData")) || {};
-  console.log("currentUserInfo", currentUserInfo);
   const userType = currentUserInfo.userType;
 
-  const [selectedSlot, setSelectedSlot] = useState("");
-
   const Selected_slots = (e) => {
-    setSelectedSlot(e);
+    setSelectedSlot((prevSelectedSlot) => (prevSelectedSlot === e ? "" : e));
     localStorage.setItem("selectedSlot", JSON.stringify(e));
   };
+  const [selectedSlot, setSelectedSlot] = useState("");
 
   const buySlot = () => {
-    const selectedSlotString = localStorage.getItem("selectedSlot");
-    if (!selectedSlotString) {
-      toast.error("select a slot before buying");
-      return;
-    }
+    const selectedSlotJson = localStorage.getItem("selectedSlot");
 
     let currentSlot;
     try {
-      currentSlot = JSON.parse(selectedSlotString);
+      currentSlot = JSON.parse(selectedSlotJson);
     } catch (error) {
       toast.error("first selected slot");
       return;
@@ -38,6 +31,7 @@ const DetailCard = () => {
     const timeSlotsArray = matchingEvent.timeSlot;
 
     const index = timeSlotsArray.findIndex((t) => t.time === currentSlot);
+    console.log("index", index);
 
     if (index !== -1 && !timeSlotsArray[index].booked) {
       timeSlotsArray[index] = { ...timeSlotsArray[index], booked: true };
@@ -75,7 +69,7 @@ const DetailCard = () => {
       localStorage.setItem("selectedSlot", "");
       toast.success("Event booked successfully");
     } else {
-      toast.error("Slot is already booked ");
+      toast.error(`Slot ${selectedSlot} is already booked`);
     }
   };
 
@@ -102,14 +96,13 @@ const DetailCard = () => {
           <h3>duration: {matchingEvent.duration}</h3>
         </div>
         <h1 style={{ textAlign: "center" }}>${matchingEvent.price}</h1>
-
         <h2 style={{ color: "#9333EA" }}>Select slot</h2>
         <div className="time-slot">
           {matchingEvent.timeSlot.map((timeSlot, index) => (
             <div
               key={index}
               onClick={() =>
-                timeSlot.booked ? null : Selected_slots(timeSlot.time)
+                timeSlot.booked ? "" : Selected_slots(timeSlot.time)
               }
               className={
                 String(timeSlot.time) === selectedSlot || timeSlot.booked

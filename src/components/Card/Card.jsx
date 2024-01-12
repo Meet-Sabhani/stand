@@ -8,7 +8,6 @@ const Card = ({ sortOption, userEvents }) => {
   const [editIndex, setEditIndex] = useState(null);
   const [selectedDuration, setSelectedDuration] = useState("30");
 
-
   const [editFormData, setEditFormData] = useState({
     nameEvent: "",
     description: "",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import Reuseable from "../Reuseable/Reuseable";
 import Card from "../Card/Card";
@@ -36,7 +36,9 @@ const Home = () => {
           <option value="duration">sort by : duration</option>
           <option value="date">sort by : date</option>
         </select>
+       
       </div>
+
       <Card sortOption={sortOption} />
     </div>
   );
