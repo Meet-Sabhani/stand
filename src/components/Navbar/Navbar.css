@@ -99,6 +99,19 @@ button:active {
     height: 5px;
     background-color: #fff;
     width: 35px;
+    transition: 0.4s ease;
+  }
+
+  .menu.open .line:nth-child(2) {
+    display: none;
+  }
+
+  .menu.open .line:nth-child(1) {
+    transform: rotate(-45deg) translateY(6px);
+  }
+
+  .menu.open .line:nth-child(3) {
+    transform: rotate(45deg) translateY(-6px);
   }
 
   .showdata {

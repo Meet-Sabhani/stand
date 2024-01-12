@@ -12,24 +12,26 @@ import SignUp from "./components/SingUp/SingUp";
 import Error from "./components/404 Error/Error";
 import AddEvent from "./components/Provider/AddEvent";
 import Bookings from "./components/Bookings/Bookings";
-import Navbar from "./components/Navbar/Navbar";
+import Detail from "./components/Detail/Detail";
+import EditEvent from "./components/Card/EditEvent";
 
 function App() {
   return (
     <>
-
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
         <Route path="/provider" element={<Provider />} />
         <Route path="/addEvent" element={<AddEvent />} />
-        <Route path="/bookings" element={<Bookings/>} />
+        <Route path="/bookings" element={<Bookings />} />
+        <Route path="/detail/:productId" element={<Detail />} />
+        <Route path="/editEvent/:id" element={<EditEvent />} />
         <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer
         position="top-right"
-        autoClose={2300}
+        autoClose={2800}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

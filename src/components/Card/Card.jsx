@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Card = ({ sortOption, userEvents }) => {
   const [eventDataList, setEventDataList] = useState(userEvents);
   const [editIndex, setEditIndex] = useState(null);
+  const [selectedDuration, setSelectedDuration] = useState("30");
+
+
   const [editFormData, setEditFormData] = useState({
     nameEvent: "",
     description: "",
@@ -12,11 +16,11 @@ const Card = ({ sortOption, userEvents }) => {
     startTime: "",
     endTime: "",
     price: "",
+    duration: "30",
   });
 
-  const storedData = localStorage.getItem("loginData");
-  const storedFormData = JSON.parse(storedData);
-  const userType = storedFormData ? storedFormData.userType : null;
+  const storedData = JSON.parse(localStorage.getItem("loginData"));
+  const userType = storedData ? storedData.userType : null;
 
   useEffect(() => {
     if (userType === "user") {
@@ -35,8 +39,20 @@ const Card = ({ sortOption, userEvents }) => {
   };
 
   const handleSaveEdit = () => {
+    const startTimeDate = new Date(
+      `${editFormData.date} ${editFormData.startTime}`
+    );
+    const endTimeDate = new Date(
+      `${editFormData.date} ${editFormData.endTime}`
+    );
+
+    if (endTimeDate <= startTimeDate) {
+      toast.error("End time must be later than start time");
+      return;
+    }
+
     const updatedEventDataList = [...eventDataList];
-    updatedEventDataList[editIndex] = { ...editFormData }; // Copy the edited data
+    updatedEventDataList[editIndex] = { ...editFormData };
     setEventDataList(updatedEventDataList);
     localStorage.setItem("eventData", JSON.stringify(updatedEventDataList));
     setEditIndex(null);
@@ -56,20 +72,6 @@ const Card = ({ sortOption, userEvents }) => {
       [name]: value,
     });
   };
-
-  function calculateTimeDuration(startTime, endTime) {
-    if (!(startTime instanceof Date) || !(endTime instanceof Date)) {
-      return "Invalid input";
-    }
-
-    const timeDiff = endTime.getTime() - startTime.getTime();
-    const totalMinutes = Math.floor(timeDiff / (1000 * 60));
-
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-
-    return `${hours} hours and ${minutes} minutes`;
-  }
 
   const sortEventData = (dataToSort) => {
     if (!dataToSort || !Array.isArray(dataToSort)) {
@@ -94,49 +96,6 @@ const Card = ({ sortOption, userEvents }) => {
 
   const sortedEventDataList = sortEventData(eventDataList);
 
-  const [purchasedItems, setPurchasedItems] = useState([]);
-  const [bookedEventIds, setBookedEventIds] = useState([]);
-
-  const [userId, setUserId] = useState(null);
-
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("loginData")) || {};
-    const loggedInUserId = storedData.id;
-    setUserId(loggedInUserId);
-
-    const storedPurchasedItems =
-      JSON.parse(localStorage.getItem("purchasedItems")) || [];
-    const userBookedEventIds = storedPurchasedItems
-      .filter((item) => item.userInfo.id === loggedInUserId)
-      .map((item) => item.eventData.id);
-
-    setBookedEventIds(userBookedEventIds);
-  }, []);
-
-  const handleBuy = (eventData) => {
-    const storedData = JSON.parse(localStorage.getItem("loginData")) || {};
-    const loggedInUserId = storedData.id;
-
-    const purchaseInfo = {
-      eventData: eventData,
-      userInfo: storedData,
-    };
-
-    setBookedEventIds((prevBookedEventIds) => [
-      ...prevBookedEventIds,
-      eventData.id,
-    ]);
-
-    const storedPurchasedItems =
-      JSON.parse(localStorage.getItem("purchasedItems")) || [];
-    const updatedPurchasedItems = [...storedPurchasedItems, purchaseInfo];
-    localStorage.setItem(
-      "purchasedItems",
-      JSON.stringify(updatedPurchasedItems)
-    );
-
-    toast.success("Item purchased successfully!");
-  };
   return (
     <div className="card-container">
       {sortedEventDataList.length === 0 ? (
@@ -161,20 +120,17 @@ const Card = ({ sortOption, userEvents }) => {
                 <h5>
                   {eventData.startTime}-{eventData.endTime}
                 </h5>
-                <h5>
-                  Duration:{" "}
-                  {calculateTimeDuration(
-                    new Date(`2023-01-01T${eventData.startTime}:00`),
-                    new Date(`2023-01-01T${eventData.endTime}:00`)
-                  )}
-                </h5>
+                <h5>Duration: {eventData.duration}</h5>
                 <h3>${eventData.price}</h3>
                 {userType === "user" ? (
-                  <button
-                    onClick={() => handleBuy(eventData)}
-                    disabled={bookedEventIds.includes(eventData.id)}
-                  >
-                    {bookedEventIds.includes(eventData.id) ? "Booked" : "Buy"}
+                  <button>
+                    {" "}
+                    <Link
+                      style={{ color: "#fff" }}
+                      to={`/detail/${eventData.id}`}
+                    >
+                      Buy
+                    </Link>
                   </button>
                 ) : (
                   <>
@@ -217,6 +173,23 @@ const Card = ({ sortOption, userEvents }) => {
                           value={editFormData.endTime}
                           onChange={handleChange}
                         />
+                        <select
+                          name="duration"
+                          id="duration"
+                          value={selectedDuration}
+                          onChange={(e) => {
+                            setSelectedDuration(e.target.value);
+                            setEditFormData({
+                              ...editFormData,
+                              duration: e.target.value,
+                            });
+                          }}
+                        >
+                          <option value="30">30 min</option>
+                          <option value="60">1 hour</option>
+                          <option value="90">1 hour 30 min</option>
+                          <option value="120">2 hour </option>
+                        </select>
                         <input
                           type="number"
                           name="price"
@@ -231,9 +204,11 @@ const Card = ({ sortOption, userEvents }) => {
                     ) : (
                       <>
                         <button onClick={() => handleEdit(index)}>Edit</button>
+                        <Link to={`/editEvent/${eventData.id}`}>Edit</Link>
                         <button onClick={() => handleDelete(index)}>
                           Delete
                         </button>
+                        <Link to={`/detail/${eventData.id}`}>Detail</Link>
                       </>
                     )}
                   </>

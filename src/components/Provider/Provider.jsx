@@ -8,9 +8,7 @@ import Card from "../Card/Card";
 const Provider = () => {
   const { checkAuthAndNavigate } = Reuseable();
   const nav = useNavigate();
-  const storedData = localStorage.getItem("loginData");
-  const storedFormData = JSON.parse(storedData);
-  const userType = storedFormData ? storedFormData.userType : null;
+
   useEffect(() => {
     checkAuthAndNavigate();
   }, []);

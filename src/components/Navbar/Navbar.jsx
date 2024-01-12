@@ -23,6 +23,9 @@ const Navbar = () => {
   const showdata = () => {
     let navRight = document.querySelector(".nav-right");
     navRight.classList.toggle("showdata");
+
+    const menu = document.querySelector('.menu');
+    menu.classList.toggle('open');
   };
 
   return (
@@ -42,7 +45,7 @@ const Navbar = () => {
           )}
           <i className="fa-solid fa-envelope"></i>
           <i className="fa-solid fa-bell"></i>
-          <h2>Welcome, {parsedData.name}</h2>
+          <h2 style={{ whiteSpace: 'nowrap'}}>Hello, {parsedData.name}</h2>
           <button onClick={() => logout()}>Logout</button>
         </div>
       </div>

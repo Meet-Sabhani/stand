@@ -3,16 +3,23 @@ import Navbar from "../Navbar/Navbar";
 import "./booking.css";
 
 const Bookings = () => {
-  const purchasedDataJson = localStorage.getItem("purchasedItems");
+  const purchasedDataJson = localStorage.getItem("bookingInfo");
   const purchasedDataParse = JSON.parse(purchasedDataJson);
+
+  const copyBookings = [...purchasedDataParse];
+  console.log("copyBook", copyBookings.eventInfo);
+
+  const loginUser = JSON.parse(localStorage.getItem("loginData"));
+
+  const filteredEvents = copyBookings.filter((booking) => {
+    return booking.eventInfo.providerId === loginUser.id;
+  });
 
   if (!Array.isArray(purchasedDataParse)) {
     return <div>No booking data available</div>;
   }
-  const loginUser = JSON.parse(localStorage.getItem("loginData"));
-  const filteredEvents = purchasedDataParse.filter(
-    (event) => event.eventData.providerId === loginUser.id
-  );
+
+  console.log("filteredEvents", filteredEvents);
 
   return (
     <>
@@ -24,16 +31,18 @@ const Bookings = () => {
           <div className="Booking-card" key={index}>
             <h3>Event Info</h3>
             <img
-              src={booking.eventData.ImgSRC}
-              alt={booking.eventData.nameEvent}
+              src={booking.eventInfo.ImgSRC}
+              alt={booking.eventInfo.nameEvent}
             />
             <div className="flex">
-              <div>Event :- {booking.eventData.nameEvent}</div>
-              <div> Price : ${booking.eventData.price}</div>
+              <div>Event :- {booking.eventInfo.nameEvent}</div>
+              <div> Price : ${booking.eventInfo.price}</div>
             </div>
             <h3>User Info</h3>
-              <div>Name : {booking.userInfo.name}</div>
-              <p>Email : {booking.userInfo.email}</p>
+            <div>Name : {booking.user.name}</div>
+            <p>Email : {booking.user.email}</p>
+            <h3>Slot</h3>
+            <div className="slot">{booking.slot}</div>
           </div>
         ))}
       </div>

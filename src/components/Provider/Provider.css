@@ -67,9 +67,21 @@ input {
   border: 1px solid grey;
   padding: 2px 3px;
 }
-.AddEvent{
+.AddEvent {
   margin: 4% auto;
 }
+
+#duration{
+  padding: 10px;
+  outline: none;
+  border-radius: 10px;
+}
+
+#duration option{
+  padding: 10px;
+  outline: none;
+}
+
 @media (max-width: 992px) {
   .addBtn {
     padding: 4% 8%;
@@ -77,5 +89,4 @@ input {
   form {
     width: 80%;
   }
-  
 }

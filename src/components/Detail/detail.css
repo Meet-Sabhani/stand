@@ -1,0 +1,63 @@
+.eventCard {
+  display: flex;
+  padding: 3% 8%;
+  /* background-color: #1F2937; */
+  gap: 3%;
+}
+.e-left {
+  width: 50%;
+  height: 70vh;
+}
+.e-left img {
+  height: 100%;
+  width: 100%;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+.e-right {
+  width: 50%;
+}
+
+.right-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.time-slot {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3%;
+  padding: 4% 0;
+}
+
+.slot {
+  background-color: #fff;
+  color: #000;
+  margin: 1%;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.selected-slot {
+  background-color: grey;
+  color: #fff;
+  margin: 1%;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+@media (max-width: 992px) {
+  .eventCard {
+    flex-direction: column;
+  }
+  .e-left {
+    width: 100%;
+  }
+  .e-right {
+    width: 100%;
+  }
+}

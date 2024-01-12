@@ -1,8 +1,14 @@
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 2rem 8%;
+}
+
 .Card {
   border-radius: 8px;
   transition: 0.5s ease-in-out;
   background-color: #1f2937;
-  height: 350px;
 }
 .Card:hover {
   scale: 1.01;
@@ -16,17 +22,16 @@
 }
 .description {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 0.8rem 1.2rem;
   gap: 4%;
 }
 
 .description-left {
-  width: 50%;
   color: #fff;
 }
 
-.description-left h2{
+.description-left h2 {
   font-size: 1rem;
 }
 
@@ -36,20 +41,12 @@
 
 .dateTime {
   font-size: 1rem;
-  width: 50%;
 }
 .dateTime h4 {
   color: #9333ea;
 }
 button {
   margin-right: 2%;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding: 2rem 8%;
 }
 
 input {
@@ -62,16 +59,10 @@ input {
   .card-container {
     grid-template-columns: 1fr 1fr;
   }
-  .Card{
-    height: 360px;
-  }
 }
 
 @media (max-width: 600px) {
   .card-container {
     grid-template-columns: 1fr;
-  }
-  .Card{
-    height: 350px;
   }
 }
