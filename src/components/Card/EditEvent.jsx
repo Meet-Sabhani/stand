@@ -20,9 +20,9 @@ const EditEvent = () => {
     price: "",
   });
 
-  useEffect(() => {
-    setEditFormData(editEventInfo);
-  });
+  // useEffect(() => {
+  //   setEditFormData(editEventInfo);
+  // });
   // useEffect(() => {
   //   if (editEventInfo && !areObjectsEqual(editFormData, editEventInfo)) {
   //     setEditFormData((prevState) => ({
@@ -32,14 +32,14 @@ const EditEvent = () => {
   //   }
   // }, [editEventInfo, editFormData]);
 
-  // useEffect(() => {
-  //   if (editEventInfo && !areObjectsEqual(editFormData, editEventInfo)) {
-  //     setEditFormData((prevState) => ({
-  //       ...prevState,
-  //       ...editEventInfo,
-  //     }));
-  //   }
-  // }, [editEventInfo, editFormData]);
+  useEffect(() => {
+    if (editEventInfo && !areObjectsEqual(editFormData, editEventInfo)) {
+      setEditFormData((prevState) => ({
+        ...prevState,
+        ...editEventInfo,
+      }));
+    }
+  }, [editEventInfo, editFormData]);
 
   const areObjectsEqual = (obj1, obj2) => {
     return JSON.stringify(obj1) === JSON.stringify(obj2);
@@ -72,12 +72,6 @@ const EditEvent = () => {
     if (!validateTime(date, startTime, endTime, selectedDuration)) {
       return;
     }
-
-    // const updatedEvents = event.map((item) =>
-    //   item.id === parseInt(productId) ? { ...item, ...editFormData } : item
-    // );
-
-    // localStorage.setItem("eventData", JSON.stringify(updatedEvents));
 
     toast.success("Event Edited Successfully");
     navigate("/provider");

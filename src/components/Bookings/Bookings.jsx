@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./booking.css";
 
@@ -6,20 +6,20 @@ const Bookings = () => {
   const purchasedDataJson = localStorage.getItem("bookingInfo");
   const purchasedDataParse = JSON.parse(purchasedDataJson);
 
-  const copyBookings = [...purchasedDataParse];
-  console.log("copyBook", copyBookings.eventInfo);
+  const [filteredEvents, setFilteredEvents] = useState([]);
 
-  const loginUser = JSON.parse(localStorage.getItem("loginData"));
+  useEffect(() => {
+    if (Array.isArray(purchasedDataParse)) {
+      const copyBookings = [...purchasedDataParse];
+      const loginUser = JSON.parse(localStorage.getItem("loginData"));
 
-  const filteredEvents = copyBookings.filter((booking) => {
-    return booking.eventInfo.providerId === loginUser.id;
-  });
+      const filteredEvents = copyBookings.filter((booking) => {
+        return booking.eventInfo.providerId === loginUser.id;
+      });
 
-  if (!Array.isArray(purchasedDataParse)) {
-    return <div>No booking data available</div>;
-  }
-
-  console.log("filteredEvents", filteredEvents);
+      setFilteredEvents(filteredEvents);
+    }
+  }, [purchasedDataParse]);
 
   return (
     <>
@@ -30,8 +30,8 @@ const Bookings = () => {
           <h1>No Bookings</h1>
         ) : (
           <>
-            {filteredEvents.map((booking, index) => (
-              <div className="Booking-card" key={index}>
+            {filteredEvents.map((booking) => (
+              <div className="Booking-card" key={booking.id}>
                 <h3>Event Info</h3>
                 <img
                   src={booking.eventInfo.ImgSRC}
