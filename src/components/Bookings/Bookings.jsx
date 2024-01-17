@@ -10,6 +10,7 @@ const Bookings = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [userBooked, setUserBooked] = useState([]);
   const loginUser = JSON.parse(localStorage.getItem("loginData"));
+
   useEffect(() => {
     if (Array.isArray(purchasedDataParse)) {
       const copyBookings = [...purchasedDataParse];
@@ -17,13 +18,14 @@ const Bookings = () => {
       const filteredEvents = copyBookings.filter((booking) => {
         return booking.eventInfo.providerId === loginUser.id;
       });
+      console.log("filteredEvents: ", filteredEvents);
+
       setFilteredEvents(filteredEvents);
 
       const filteredUserBookings = copyBookings.filter((booking) => {
         return booking.user.id === loginUser.id;
       });
-
-      console.log("filteredUserBookings in br", filteredUserBookings);
+      console.log("filteredUserBookings: ", filteredUserBookings);
 
       setUserBooked(filteredUserBookings);
     }
@@ -56,7 +58,9 @@ const Bookings = () => {
                   <div>Name : {booking.user.name}</div>
                   <p>Email : {booking.user.email}</p>
                   <h3>Slot</h3>
-                  <div className="slot">{booking.slot}</div>
+                  {booking.slots.map((slot, i) => (
+                    <div key={i}>{slot}</div>
+                  ))}
                 </div>
               ))}
             </>
@@ -84,9 +88,13 @@ const Bookings = () => {
                     <h1>{booked.eventInfo.nameEvent}</h1>
                     <p>{booked.eventInfo.description}</p>
                     <p>{booked.eventInfo.date}</p>
-                    <div className="perentSlot">
-                    Slot :- <div className="uSlot">{booked.slot}</div>
-                    </div>
+                    {userBooked.length > 0 && (
+                      <div className="perentSlot">
+                        {booked.slots.map((slotTime, i) => (
+                          <div key={i}>{slotTime}</div>
+                        ))}
+                      </div>
+                    )}
                   </Link>
                 ))}
               </>

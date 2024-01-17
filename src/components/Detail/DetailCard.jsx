@@ -14,19 +14,41 @@ const DetailCard = () => {
   const [selectedSlot, setSelectedSlot] = useState([]);
   console.log("selectedSlot: ", selectedSlot);
 
-  const Selected_slots = (e) => {
-    setSelectedSlot((p) => (p === e ? "" : e));
+  const Selected_slots = (time) => {
+    setSelectedSlot((prevSelectedSlots) => {
+      if (prevSelectedSlots.includes(time)) {
+        return prevSelectedSlots.filter(
+          (selectedTime) => selectedTime !== time
+        );
+      } else {
+        return [...prevSelectedSlots, time];
+      }
+    });
   };
 
   const buySlot = () => {
-    const timeSlotsArray = matchingEvent.timeSlot;
+    const timeSlotsArray = [...matchingEvent.timeSlot];
 
-    const index = timeSlotsArray.findIndex((t) => t.time === selectedSlot);
-    console.log("index", index);
+    if (selectedSlot.length === 0) {
+      toast.error("Please select a slot before clicking Buy");
+      return;
+    }
 
-    if (index !== -1 && !timeSlotsArray[index].booked) {
-      timeSlotsArray[index] = { ...timeSlotsArray[index], booked: true };
+    const selectedSlotsInfo = selectedSlot
+      .map((slot) => {
+        const index = timeSlotsArray.findIndex((t) => t.time === slot);
 
+        if (index !== -1 && !timeSlotsArray[index].booked) {
+          timeSlotsArray[index] = { ...timeSlotsArray[index], booked: true };
+          return slot;
+        } else {
+          toast.error("selected slots are already booked");
+          return null;
+        }
+      })
+      .filter(Boolean);
+
+    if (selectedSlotsInfo.length > 0) {
       const updatedMatchingEvent = {
         ...matchingEvent,
         timeSlot: timeSlotsArray,
@@ -47,16 +69,15 @@ const DetailCard = () => {
       const newBookingObject = {
         user: currentUserInfo,
         eventInfo: matchingEvent,
-        slot: matchingEvent.timeSlot[index].time,
+        slots: selectedSlotsInfo,
       };
 
       existingBookingInfo.push(newBookingObject);
       const updatedBookingInfoString = JSON.stringify(existingBookingInfo);
 
       localStorage.setItem("bookingInfo", updatedBookingInfoString);
-      toast.success(`Event Slot ${selectedSlot} booked successfully`);
-    } else {
-      toast.error(`Slot ${selectedSlot} is already booked`);
+      toast.success("Slots booked successfully");
+      setSelectedSlot([]);
     }
   };
 
@@ -92,7 +113,7 @@ const DetailCard = () => {
                 timeSlot.booked ? "" : Selected_slots(timeSlot.time)
               }
               className={
-                timeSlot.time === selectedSlot || timeSlot.booked
+                selectedSlot.includes(timeSlot.time) || timeSlot.booked
                   ? "selected-slot"
                   : "slot"
               }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,24 +18,25 @@ const Navbar = () => {
     }
   };
 
-  const showdata = () => {
-    let navRight = document.querySelector(".nav-right");
-    navRight.classList.toggle("showdata");
+  const [isDataVisible, setIsDataVisible] = useState(false);
 
-    const menu = document.querySelector(".menu");
-    menu.classList.toggle("open");
+  const toggleData = () => {
+    setIsDataVisible((prev) => !prev);
   };
 
   return (
     <header className="navbar">
       <div className="nav-top">
         <h1>VENUSS</h1>
-        <div className="menu" onClick={() => showdata()}>
+        <div
+          className={`menu ${isDataVisible ? "open" : ""}`}
+          onClick={() => toggleData()}
+        >
           <div className="line"></div>
           <div className="line"></div>
           <div className="line"></div>
         </div>
-        <div className="nav-right">
+        <div className={`nav-right ${isDataVisible ? "showdata" : ""}`}>
           {parsedData.userType === "user" ? (
             <Link to="/home">Home</Link>
           ) : (
@@ -47,46 +48,6 @@ const Navbar = () => {
           <button onClick={() => logout()}>Logout</button>
         </div>
       </div>
-      {/* <div className="navbar-bottom ">
-        <div className="nav-b-left">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Dubai, United State"
-            onChange={(e) => setSearchInput(e.target.value)}
-            value={searchInput}
-          />
-        </div>
-        <div className="nav-b-right">
-          <div>
-            <p>Event Select</p>
-            <select name="venue" id="venues">
-              <option value="venue">venue</option>
-            </select>
-          </div>
-          <div>
-            <p>Select Category</p>
-            <select name="venue" id="">
-              <option value="venue">venue</option>
-            </select>
-          </div>
-          <div>
-            <p>Date</p>
-            <input
-              type="date"
-              style={{ backgroundColor: "rgb(76, 76, 76)", color: "white" }}
-            />
-          </div>
-          <div>
-            <p>Duration</p>
-            <select name="venue" id="">
-              <option value="30">30 minit</option>
-              <option value="1H">1 hour</option>
-              <option value="2H">2 hour</option>
-            </select>
-          </div>
-        </div>
-      </div> */}
     </header>
   );
 };
