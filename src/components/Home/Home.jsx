@@ -36,7 +36,10 @@ const Home = () => {
           <option value="duration">sort by : duration</option>
           <option value="date">sort by : date</option>
         </select>
-       
+      </div>
+
+      <div className="addBtn">
+        <Link to="/bookings">View Your Bookings</Link>
       </div>
 
       <Card sortOption={sortOption} />

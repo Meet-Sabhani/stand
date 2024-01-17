@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Navbar.css";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState("");
 
-  const getUser = localStorage.getItem("loginData");
-  const parsedData = JSON.parse(getUser);
+  const parsedData = JSON.parse(localStorage.getItem("loginData")) || "";
 
   const logout = () => {
     const confirmed = window.confirm("Are you sure you want to log out?");
@@ -24,8 +22,8 @@ const Navbar = () => {
     let navRight = document.querySelector(".nav-right");
     navRight.classList.toggle("showdata");
 
-    const menu = document.querySelector('.menu');
-    menu.classList.toggle('open');
+    const menu = document.querySelector(".menu");
+    menu.classList.toggle("open");
   };
 
   return (
@@ -45,7 +43,7 @@ const Navbar = () => {
           )}
           <i className="fa-solid fa-envelope"></i>
           <i className="fa-solid fa-bell"></i>
-          <h2 style={{ whiteSpace: 'nowrap'}}>Hello, {parsedData.name}</h2>
+          <h2 style={{ whiteSpace: "nowrap" }}>Hello, {parsedData.name}</h2>
           <button onClick={() => logout()}>Logout</button>
         </div>
       </div>

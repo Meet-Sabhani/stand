@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Card.css";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import validateForm from "../../utils/validateForm";
+import validateTime from "../../utils/validateTime";
 
 const Card = ({ sortOption, userEvents }) => {
   const [eventDataList, setEventDataList] = useState(userEvents);
@@ -38,17 +40,18 @@ const Card = ({ sortOption, userEvents }) => {
   };
 
   const handleSaveEdit = () => {
-    const startTimeDate = new Date(
-      `${editFormData.date} ${editFormData.startTime}`
-    );
-    const endTimeDate = new Date(
-      `${editFormData.date} ${editFormData.endTime}`
-    );
+    // const startTimeDate = new Date(
+    //   `${editFormData.date} ${editFormData.startTime}`
+    // );
+    // const endTimeDate = new Date(
+    //   `${editFormData.date} ${editFormData.endTime}`
+    // );
 
-    if (endTimeDate <= startTimeDate) {
-      toast.error("End time must be later than start time");
-      return;
-    }
+    // if (endTimeDate <= startTimeDate) {
+    //   toast.error("End time must be later than start time");
+    //   return;
+    // }
+
 
     const updatedEventDataList = [...eventDataList];
     updatedEventDataList[editIndex] = { ...editFormData };
@@ -203,7 +206,7 @@ const Card = ({ sortOption, userEvents }) => {
                     ) : (
                       <>
                         <button onClick={() => handleEdit(index)}>Edit</button>
-                        <Link to={`/editEvent/${eventData.id}`}>Edit</Link>
+                        {/* <Link to={`/editEvent/${eventData.id}`}>Edit</Link> */}
                         <button onClick={() => handleDelete(index)}>
                           Delete
                         </button>

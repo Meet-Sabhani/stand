@@ -11,22 +11,18 @@ const DetailCard = () => {
   const currentUserInfo = JSON.parse(localStorage?.getItem("loginData")) || {};
   const userType = currentUserInfo.userType;
 
+  const [selectedSlot, setSelectedSlot] = useState([]);
+
   const Selected_slots = (e) => {
-    setSelectedSlot((prevSelectedSlot) => (prevSelectedSlot === e ? "" : e));
+    setSelectedSlot((p) => (p === e ? "" : e));
+
     localStorage.setItem("selectedSlot", JSON.stringify(e));
   };
-  const [selectedSlot, setSelectedSlot] = useState("");
+
+  console.log("selectedSlot", selectedSlot);
 
   const buySlot = () => {
-    const selectedSlotJson = localStorage.getItem("selectedSlot");
-
-    let currentSlot;
-    try {
-      currentSlot = JSON.parse(selectedSlotJson);
-    } catch (error) {
-      toast.error("first selected slot");
-      return;
-    }
+    let currentSlot = selectedSlot;
 
     const timeSlotsArray = matchingEvent.timeSlot;
 
