@@ -66,10 +66,11 @@ const Bookings = () => {
         <>
           <div className="card-container">
             {userBooked.length === 0 ? (
-              <h1 style={{width: '300%', textAlign: 'center'}} >You have't book any event </h1>
+              <h1 style={{ width: "300%", textAlign: "center" }}>
+                You have't book any event{" "}
+              </h1>
             ) : (
               <>
-                (
                 {userBooked.map((booked) => (
                   <Link
                     to={`/detail/${booked.eventInfo.id}`}
@@ -83,13 +84,11 @@ const Bookings = () => {
                     <h1>{booked.eventInfo.nameEvent}</h1>
                     <p>{booked.eventInfo.description}</p>
                     <p>{booked.eventInfo.date}</p>
-                    <p>
-                      {booked.eventInfo.startTime}- {booked.eventInfo.endTime}
-                    </p>
-                    <div className="slot">{booked.slot}</div>
+                    <div className="perentSlot">
+                    Slot :- <div className="uSlot">{booked.slot}</div>
+                    </div>
                   </Link>
                 ))}
-                )
               </>
             )}
           </div>

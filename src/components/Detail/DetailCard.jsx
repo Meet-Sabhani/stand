@@ -12,21 +12,16 @@ const DetailCard = () => {
   const userType = currentUserInfo.userType;
 
   const [selectedSlot, setSelectedSlot] = useState([]);
+  console.log("selectedSlot: ", selectedSlot);
 
   const Selected_slots = (e) => {
     setSelectedSlot((p) => (p === e ? "" : e));
-
-    localStorage.setItem("selectedSlot", JSON.stringify(e));
   };
 
-  console.log("selectedSlot", selectedSlot);
-
   const buySlot = () => {
-    let currentSlot = selectedSlot;
-
     const timeSlotsArray = matchingEvent.timeSlot;
 
-    const index = timeSlotsArray.findIndex((t) => t.time === currentSlot);
+    const index = timeSlotsArray.findIndex((t) => t.time === selectedSlot);
     console.log("index", index);
 
     if (index !== -1 && !timeSlotsArray[index].booked) {
@@ -46,11 +41,8 @@ const DetailCard = () => {
         )
       );
 
-      const existingBookingInfoString = localStorage.getItem("bookingInfo");
-
-      const existingBookingInfo = existingBookingInfoString
-        ? JSON.parse(existingBookingInfoString)
-        : [];
+      const existingBookingInfo =
+        JSON.parse(localStorage.getItem("bookingInfo")) || [];
 
       const newBookingObject = {
         user: currentUserInfo,
@@ -62,8 +54,7 @@ const DetailCard = () => {
       const updatedBookingInfoString = JSON.stringify(existingBookingInfo);
 
       localStorage.setItem("bookingInfo", updatedBookingInfoString);
-      localStorage.setItem("selectedSlot", "");
-      toast.success("Event booked successfully");
+      toast.success(`Event Slot ${selectedSlot} booked successfully`);
     } else {
       toast.error(`Slot ${selectedSlot} is already booked`);
     }
@@ -101,7 +92,7 @@ const DetailCard = () => {
                 timeSlot.booked ? "" : Selected_slots(timeSlot.time)
               }
               className={
-                String(timeSlot.time) === selectedSlot || timeSlot.booked
+                timeSlot.time === selectedSlot || timeSlot.booked
                   ? "selected-slot"
                   : "slot"
               }

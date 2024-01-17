@@ -50,8 +50,6 @@ const AddEvent = () => {
     );
   };
 
-
-
   const getUserID = () => {
     const loginData = localStorage.getItem("loginData");
     return loginData ? JSON.parse(loginData).id : null;
