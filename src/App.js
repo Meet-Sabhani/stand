@@ -14,6 +14,7 @@ import AddEvent from "./components/Provider/AddEvent";
 import Bookings from "./components/Bookings/Bookings";
 import Detail from "./components/Detail/Detail";
 import EditEvent from "./components/Card/EditEvent";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/editEvent/:id" element={<EditEvent />} />
         <Route path="*" element={<Error />} />
       </Routes>
+      <Footer />
       <ToastContainer
         position="top-right"
         autoClose={2800}

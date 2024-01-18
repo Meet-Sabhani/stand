@@ -1,0 +1,41 @@
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 4% 8%;
+  background-color: black;
+}
+
+.footer-line {
+  display: flex;
+  gap: 2%;
+}
+
+.footer-line p a {
+  color: #9b9dad;
+}
+
+.footer-right {
+  text-align: right;
+}
+@media (max-width: 992px) {
+  footer {
+    flex-direction: column;
+    gap: 4%;
+  }
+  .footer-right {
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-left {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .footer-line {
+    margin: 3%;
+    flex-direction: column;
+    width: 40%;
+  }
+}

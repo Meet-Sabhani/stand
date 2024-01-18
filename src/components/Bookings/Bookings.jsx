@@ -58,9 +58,13 @@ const Bookings = () => {
                   <div>Name : {booking.user.name}</div>
                   <p>Email : {booking.user.email}</p>
                   <h3>Slot</h3>
-                  {booking.slots.map((slot, i) => (
-                    <div key={i}>{slot}</div>
-                  ))}
+                  <div className="perentSlot">
+                    {booking.slots.map((slot, i) => (
+                      <div key={i} className="bookSlot">
+                        {slot}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </>
@@ -88,13 +92,13 @@ const Bookings = () => {
                     <h1>{booked.eventInfo.nameEvent}</h1>
                     <p>{booked.eventInfo.description}</p>
                     <p>{booked.eventInfo.date}</p>
-                    {userBooked.length > 0 && (
-                      <div className="perentSlot">
-                        {booked.slots.map((slotTime, i) => (
-                          <div key={i}>{slotTime}</div>
-                        ))}
-                      </div>
-                    )}
+                    <div className="perentSlot">
+                      {booked.slots.map((slotTime, i) => (
+                        <div key={i} className="bookSlot">
+                          {slotTime}
+                        </div>
+                      ))}
+                    </div>
                   </Link>
                 ))}
               </>
