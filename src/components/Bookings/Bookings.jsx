@@ -45,7 +45,7 @@ const Bookings = () => {
             <>
               {filteredEvents.map((booking) => (
                 <div className="Booking-card" key={booking.id}>
-                  <h3>Event Info</h3>
+                  <h3>See full Event Info</h3>
                   <img
                     src={booking.eventInfo.ImgSRC}
                     alt={booking.eventInfo.nameEvent}
