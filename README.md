@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-view site :-  https://vercel.com/meet-sabhanis-projects/standup-comedy-tikit 
+view site :-  https://standup-comedy-tikit.vercel.app/
 
 ## Available Scripts
 
